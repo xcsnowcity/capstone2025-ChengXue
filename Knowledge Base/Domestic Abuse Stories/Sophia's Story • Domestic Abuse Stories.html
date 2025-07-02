@@ -1,0 +1,203 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this file,
+   - You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" platform="linux" style="--font-family: sans-serif; --font-weight: normal;"><head>
+    <title id="reader-title">Sophia's Story • Domestic Abuse Stories</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src chrome:; img-src data: *; media-src *; object-src 'none'">
+    <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+    <meta name="viewport" content="width=device-width; user-scalable=0">
+    <link rel="stylesheet" href="chrome://global/skin/design-system/tokens-brand.css">
+    <link rel="stylesheet" href="chrome://global/skin/aboutReader.css" type="text/css">
+    <link rel="localization" href="toolkit/about/aboutReader.ftl">
+    <link rel="localization" href="toolkit/branding/brandings.ftl">
+    <script type="module" src="chrome://global/content/reader/moz-slider.mjs"></script>
+    <script type="module" src="chrome://global/content/elements/moz-input-color.mjs"></script>
+    <script type="module" src="chrome://global/content/elements/named-deck.js"></script>
+  <link rel="stylesheet" href="chrome://global/skin/narrate.css"><link rel="shortcut icon" href="https://www.ncdv.org.uk/wp-content/uploads/2020/03/cropped-favicon-black-32x32.png"></head>
+
+  <body class="light loaded" style="--content-width: 30em; --font-size: 20px;">
+    <div class="top-anchor"></div>
+
+    <div id="toolbar" class="toolbar-container">
+      <div class="toolbar reader-toolbar">
+        <div class="reader-controls" articledir="ltr">
+          <button class="close-button toolbar-button" aria-labelledby="toolbar-close" data-telemetry-id="reader-close">
+            <span class="hover-label" id="toolbar-close" data-l10n-id="about-reader-toolbar-close">Close Reader View</span>
+          </button>
+          <ul class="dropdown text-layout-dropdown">
+            <li>
+              <button class="dropdown-toggle toolbar-button text-layout-button" aria-labelledby="toolbar-text-layout-controls" data-telemetry-id="reader-text-layout-controls">
+                <span class="hover-label" id="toolbar-text-layout-controls" data-l10n-id="about-reader-toolbar-text-layout-controls">Text and layout</span>
+              </button>
+            </li>
+            <li class="dropdown-popup" id="text-layout-controls" tabindex="-1">
+              <h2 data-l10n-id="about-reader-text-header" id="about-reader-text-header">Text</h2>
+              <div id="text-size-controls">
+                <span data-l10n-id="about-reader-text-size-label" id="about-reader-text-size-label">Text size</span>
+                <div class="text-size-buttons buttonrow">
+                  <button class="text-size-minus-button" data-l10n-id="about-reader-toolbar-minus" data-telemetry-id="text-size-minus-button" title="Decrease font size"></button>
+                  <button class="text-size-plus-button" data-l10n-id="about-reader-toolbar-plus" data-telemetry-id="text-size-plus-button" title="Increase font size"></button>
+                </div>
+              </div>
+              <div id="font-controls">
+                <div id="font-type-dropdown" class="dropdown-selector">
+                  <label for="font-type-selector" data-l10n-id="about-reader-font-type-selector-label">Font</label>
+                  <select name="font-type-selector" id="font-type-selector" data-telemetry-id="font-type-selector"><option data-l10n-id="about-reader-font-type-sans-serif" value="sans-serif" selected="selected">Sans-serif</option><option data-l10n-id="about-reader-font-type-serif" value="serif">Serif</option><option data-l10n-id="about-reader-font-type-monospace" value="monospace">Monospace</option></select>
+                </div>
+                <div id="font-weight-dropdown" class="dropdown-selector">
+                  <label for="font-weight-selector" data-l10n-id="about-reader-font-weight-selector-label">Font weight</label>
+                  <select name="font-weight-selector" id="font-weight-selector" data-telemetry-id="font-weight-selector"><option data-l10n-id="about-reader-font-weight-regular" value="regular" selected="selected">Regular</option><option data-l10n-id="about-reader-font-weight-light" value="light">Light</option><option data-l10n-id="about-reader-font-weight-bold" value="bold">Bold</option></select>
+                </div>
+              </div>
+              <hr>
+              <h2 data-l10n-id="about-reader-layout-header" id="about-reader-layout-header">Layout</h2>
+              <div id="content-width-slider" class="slider-container"><moz-slider min="1" max="9" value="3" ticks="9" tick-labels="[]" data-l10n-id="about-reader-content-width-label" data-l10n-attrs="label" slider-icon="chrome://global/skin/reader/content-width-20.svg" data-telemetry-id="content-width-slider" label="Content width"></moz-slider></div>
+              <div id="line-spacing-slider" class="slider-container"><moz-slider min="1" max="9" value="4" ticks="9" tick-labels="[]" data-l10n-id="about-reader-line-spacing-label" data-l10n-attrs="label" slider-icon="chrome://global/skin/reader/line-spacing-20.svg" data-telemetry-id="line-spacing-slider" label="Line spacing"></moz-slider></div>
+              <hr>
+              <details id="about-reader-advanced-layout">
+                <summary class="accordion-header">
+                  <h2 data-l10n-id="about-reader-advanced-layout-header" id="about-reader-advanced-layout-header">Advanced</h2>
+                  <span class="chevron-icon"></span>
+                </summary>
+                <div id="character-spacing-slider" class="slider-container"><moz-slider min="1" max="9" value="0" ticks="9" tick-labels="[&quot;Standard&quot;, &quot;Wide&quot;]" data-l10n-id="about-reader-character-spacing-label" data-l10n-attrs="label" slider-icon="chrome://global/skin/reader/character-spacing-20.svg" data-telemetry-id="character-spacing-slider" label="Character spacing"></moz-slider></div>
+                <div id="word-spacing-slider" class="slider-container"><moz-slider min="1" max="9" value="0" ticks="9" tick-labels="[&quot;Standard&quot;, &quot;Wide&quot;]" data-l10n-id="about-reader-word-spacing-label" data-l10n-attrs="label" slider-icon="chrome://global/skin/reader/word-spacing-20.svg" data-telemetry-id="word-spacing-slider" label="Word spacing"></moz-slider></div>
+                <label for="text-alignment-buttons" data-l10n-id="about-reader-text-alignment-label">Text alignment</label>
+                <div class="text-alignment-buttons radiorow" id="text-alignment-buttons"><input id="radio-itemleft-align-button" type="radio" class="radio-button" name="text-alignment" data-telemetry-id="left-align-button" checked="checked"><label for="radio-itemleft-align-button" class="left-align-button" data-l10n-id="about-reader-text-alignment-left" checked="true" title="Align text left"></label><input id="radio-itemcenter-align-button" type="radio" class="radio-button" name="text-alignment" data-telemetry-id="center-align-button"><label for="radio-itemcenter-align-button" class="center-align-button" data-l10n-id="about-reader-text-alignment-center" title="Align text center"></label><input id="radio-itemright-align-button" type="radio" class="radio-button" name="text-alignment" data-telemetry-id="right-align-button"><label for="radio-itemright-align-button" class="right-align-button" data-l10n-id="about-reader-text-alignment-right" title="Align text right"></label><input id="radio-itemjustify-align-button" type="radio" class="radio-button" name="text-alignment" data-telemetry-id="justify-align-button"><label for="radio-itemjustify-align-button" class="justify-align-button" data-l10n-id="about-reader-text-alignment-justify" title="Justify text"></label></div>
+                <button class="text-layout-reset-button reset-button" data-l10n-id="about-reader-reset-button">Reset defaults</button>
+              </details>
+            </li>
+          </ul>
+          <ul class="dropdown colors-dropdown">
+            <li>
+              <button class="dropdown-toggle toolbar-button colors-button" aria-labelledby="toolbar-color-controls" data-telemetry-id="reader-color-controls">
+                <span class="hover-label" id="toolbar-color-controls" data-l10n-id="about-reader-toolbar-theme-controls">Theme</span>
+              </button>
+            </li>
+            <li class="dropdown-popup" id="color-controls">
+              <h2 data-l10n-id="about-reader-colors-menu-header" id="about-reader-colors-menu-header">Theme</h2>
+              <button-group aria-labelledby="about-reader-colors-menu-header" role="tablist">
+                <button is="named-deck-button" deck="tabs-deck" name="fxtheme" data-l10n-id="about-reader-fxtheme-tab" data-telemetry-id="colors-menu-default-tab" id="tabs-deck-button-fxtheme" role="tab" aria-selected="true" tabindex="0" selected="">Default</button>
+                <button is="named-deck-button" deck="tabs-deck" name="customtheme" data-l10n-id="about-reader-customtheme-tab" data-telemetry-id="colors-menu-custom-tab" id="tabs-deck-button-customtheme" role="tab" aria-selected="false" tabindex="-1">Custom</button>
+              </button-group>
+              <named-deck id="tabs-deck" is-tabbed="" selected-view="fxtheme">
+                <div name="fxtheme" class="color-scheme-buttons radiorow" aria-labelledby="tabs-deck-button-fxtheme" role="tabpanel" slot="selected"><input id="radio-itemauto-button" type="radio" class="radio-button" name="color-scheme" data-telemetry-id="auto-button"><label for="radio-itemauto-button" class="auto-button" data-l10n-id="about-reader-color-auto-theme" title="Auto theme">Auto</label><input id="radio-itemlight-button" type="radio" class="radio-button" name="color-scheme" data-telemetry-id="light-button" checked="checked"><label for="radio-itemlight-button" class="light-button" data-l10n-id="about-reader-color-light-theme" checked="true" title="Light theme">Light</label><input id="radio-itemdark-button" type="radio" class="radio-button" name="color-scheme" data-telemetry-id="dark-button"><label for="radio-itemdark-button" class="dark-button" data-l10n-id="about-reader-color-dark-theme" title="Dark theme">Dark</label><input id="radio-itemsepia-button" type="radio" class="radio-button" name="color-scheme" data-telemetry-id="sepia-button"><label for="radio-itemsepia-button" class="sepia-button" data-l10n-id="about-reader-color-sepia-theme" title="Sepia theme">Sepia</label><input id="radio-itemcontrast-button" type="radio" class="radio-button" name="color-scheme" data-telemetry-id="contrast-button"><label for="radio-itemcontrast-button" class="contrast-button" data-l10n-id="about-reader-color-contrast-theme" title="Contrast theme">Contrast</label><input id="radio-itemgray-button" type="radio" class="radio-button" name="color-scheme" data-telemetry-id="gray-button"><label for="radio-itemgray-button" class="gray-button" data-l10n-id="about-reader-color-gray-theme" title="Gray theme">Gray</label></div>
+                <div name="customtheme" aria-labelledby="tabs-deck-button-customtheme" role="tabpanel" slot="">
+                  <ul class="custom-colors-selection"><li><moz-input-color name="foreground" data-l10n-id="about-reader-custom-colors-foreground2" value="#14151A" data-l10n-attrs="label" label="Text" title="Edit color"></moz-input-color></li><li><moz-input-color name="background" data-l10n-id="about-reader-custom-colors-background2" value="#FFFFFF" data-l10n-attrs="label" label="Background" title="Edit color"></moz-input-color></li><li><moz-input-color name="unvisited-links" data-l10n-id="about-reader-custom-colors-unvisited-links2" value="#0060DF" data-l10n-attrs="label" label="Unvisited links" title="Edit color"></moz-input-color></li><li><moz-input-color name="visited-links" data-l10n-id="about-reader-custom-colors-visited-links2" value="#321C64" data-l10n-attrs="label" label="Visited links" title="Edit color"></moz-input-color></li><li><moz-input-color name="selection-highlight" data-l10n-id="about-reader-custom-colors-selection-highlight2" value="#FFFFCC" data-l10n-attrs="label" label="Highlighter for read aloud" title="Edit color"></moz-input-color></li></ul>
+                  <button class="custom-colors-reset-button reset-button" data-l10n-id="about-reader-reset-button" hidden="">Reset defaults</button>
+                </div>
+              </named-deck>
+            </li>
+          </ul>
+        <ul class="dropdown narrate-dropdown"><li><button class="dropdown-toggle toolbar-button narrate-toggle" data-telemetry-id="reader-listen" aria-label="Read aloud (N)" hidden=""><span class="hover-label">Read aloud (N)</span></button></li><li class="dropdown-popup"><h2 id="narrate-header">Read aloud</h2><div class="narrate-row narrate-control"><button class="narrate-skip-previous" disabled="disabled" aria-keyshortcuts="ArrowLeft" title="Back (←)"></button><button class="narrate-start-stop" aria-keyshortcuts="N" title="Start (N)"></button><button class="narrate-skip-next" disabled="disabled" aria-keyshortcuts="ArrowRight" title="Forward (→)"></button></div><div class="narrate-row narrate-rate"><span class="narrate-rate-icon slow" title="Slow down narration"></span><input class="narrate-rate-input" value="0" step="5" max="100" min="-100" type="range" aria-label="Choose a narration speed from -100 to 100, where 0 is the default speed." title="Speed"><span class="narrate-rate-icon fast" title="Speed up narration"></span></div><hr><h2 id="voice-header">Voice</h2><div class="narrate-row narrate-voices"><div class="voiceselect voice-select"><button class="select-toggle" aria-controls="voice-options" aria-expanded="false" role="combobox" aria-labelledby="voice-header">
+      <span class="current-voice"></span>
+    </button>
+    <div class="options" id="voice-options" role="listbox"></div></div></div></li></ul></div>
+      </div>
+    </div>
+
+    <div class="container" style="--line-height: 1.6em; --letter-spacing: -0.03em; --word-spacing: -0.05em; --text-alignment: start; --block-img-margin-right: unset; --block-img-margin-left: unset;" lang="en-GB" dir="ltr">
+      <div class="header reader-header reader-show-element">
+        <a class="domain reader-domain" href="https://www.ncdv.org.uk/stories/sophias-story/">ncdv.org.uk</a>
+        <div class="domain-border"></div>
+        <h1 class="reader-title">Sophia's Story • Domestic Abuse Stories</h1>
+        <div class="credits reader-credits">einnovate</div>
+        <div class="meta-data">
+          <div class="reader-estimated-time" data-l10n-args="{&quot;range&quot;:&quot;5–6&quot;,&quot;rangePlural&quot;:&quot;other&quot;}" data-l10n-id="about-reader-estimated-read-time" dir="ltr">5–6 minutes</div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="content">
+        <div class="moz-reader-content reader-show-element"><div id="readability-page-1" class="page"><div data-id="d8b9317" data-element_type="widget" data-widget_type="theme-post-content.default">
+					<p>Sophia (not her real name), referred herself to NCDV.&nbsp; 
+Although she was on benefits, Sophia had always prided herself on her 
+ability to manage her finances. She grew up in a family that didn’t have
+ a lot of money but what they did have, they spent wisely and Sophia 
+took these values into her adult life. When she met Mark (not his real 
+name), he seemed different from anyone she had ever known before. He was
+ kind, charming, and supportive—at least, that’s how it started. He 
+praised her and often spoke about the future they would build together. 
+He made her feel loved and important.</p>
+<p>In the beginning, their relationship was filled with shared dreams 
+and excitement about building a life together. But soon, Mark’s 
+behaviour started to change. At that point in time, Sophia did 
+work.&nbsp; A job she enjoyed.&nbsp; The coercive control started 
+subtly. He would say “You don’t need to work, I earn more than enough to
+ take care of you,” or later, once she had left her job, he would say, 
+“I can pay the bills.&nbsp; It is easier if I just do it.” He managed to
+ convince Sophia that she could focus on other things and let him handle
+ the finances. At first, it seemed like a thoughtful gesture. Sophia 
+didn’t have to worry about anything.</p>
+<p>As time went on, however, Mark began to control every aspect of their
+ finances without Sophia even noticing it until it was too late. He 
+insisted that Sophia close her individual bank accounts and merge 
+everything into a joint account. He assured her that it would be easier 
+for them to manage their money together. &nbsp;Sophia didn’t want to do 
+it, but she did, believing that it would strengthen their relationship.</p>
+<p>But soon, Mark started making decisions about their money without 
+even consulting her. He told her how much she could spend and what she 
+could buy.&nbsp; She had to show him receipts when she had been out 
+shopping.&nbsp; He would give her ‘pocket money’ with which to get food 
+shopping but nothing else unless he had agreed.&nbsp; Sophia tried to 
+question these things, but Mark would tell her, “You don’t understand 
+money like I do.” He would make her feel useless and stupid.</p>
+<p>It got worse. &nbsp;Mark began using their finances as a tool of 
+control. He would take out large amounts of money for himself without 
+discussing it with Sophia, leaving her wondering how they would pay 
+bills or cover everyday expenses. He would constantly remind her of how 
+much he was providing for her, making her feel dependent on him. “I’ve 
+given you everything you have,” he would say. “You wouldn’t be able to 
+live without me.”</p>
+<p>Sophia felt trapped. She had always been financially independent, 
+before she met Mark, but now she was left with no means of supporting 
+herself.&nbsp; If she would ask for money to buy clothes or toiletries 
+for herself, he would accuse her of being ungrateful for all that he 
+provided, and she began to feel guilty for even considering buying 
+something for herself.</p>
+<p>The emotional strain of the financial abuse started to affect every 
+part of Sophia’s life. She felt anxious and helpless, unsure of how she 
+could get herself out of the situation.&nbsp; She became completely 
+dependent on him for money, and had no means of supporting herself if 
+she left the relationship.</p>
+<p>It wasn’t until Sophia confided in a close friend that she began to 
+see that what was happening to her was a form of abuse. Her friend 
+listened patiently and then said, “That’s financial abuse, Sophia. 
+You’re not in control of your own life.” It was a wake-up call. Sophia 
+had never thought of it that way, but once she recognised the pattern, 
+everything clicked. She realised she needed to take back control of her 
+finances and her life.</p>
+<p>Sophia made the decision to leave Mark and return to her parent’s 
+home. She knew that breaking free from the financial abuse would take 
+time, but she was determined to regain her independence.&nbsp; With the 
+help of a specialist domestic abuse support organisation, Sophia slowly 
+began to untangle herself from Mark’s control. It wasn’t easy.&nbsp; 
+Sophia felt she had to start her life from scratch.&nbsp; And Mark would
+ not stop calling her and turning up to where she now lived. The 
+domestic abuse organisation referred her to NCDV and we helped her get a
+ non-molestation injunction.&nbsp; However, Mark was very 
+determined!&nbsp; He breached the court order by turning up at Sophia’s 
+parents’ house and threatening to kick the front door down. The police 
+were called and Mark was arrested for breach of the court order and 
+criminal damage.&nbsp; He was sentenced to 2 weeks in prison.&nbsp; Not 
+long, you might say?!, but it was enough for him to realise that Sophia 
+had broken the cycle of abuse, ad he no longer had control over her.</p>
+<p>Sophia remains protected by the non-molestation injunction.&nbsp; She
+ is working again and is starting to feel more confident in managing her
+ own finances again.</p>
+<p>Sophia’s story is a powerful reminder that financial abuse is a form 
+of control that can leave lasting emotional and financial scars. But 
+with support, education, and courage, it’s possible to reclaim 
+independence and rebuild a life free from abuse.</p>
+				</div></div></div>
+      </div>
+
+      <div>
+        <div class="reader-message"></div>
+      </div>
+      <div aria-owns="toolbar"></div>
+    </div>
+  
+
+</body></html>

@@ -1,0 +1,277 @@
+\documentclass{report}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+
+% --- DOCUMENT START ---
+\begin{document}
+
+\title{Project Proposal: A Trauma-Informed, Retrieval-Augmented Generation (RAG) Conversational Agent for Localised Domestic Abuse Support in Ireland}
+\author{Your Name}
+\date{\today}
+\maketitle
+
+\tableofcontents
+
+% --- CHAPTER 1: INTRODUCTION ---
+\chapter{Introduction}
+\label{chap:introduction}
+
+\section{Topic and Purpose}
+Domestic abuse represents a profound and pervasive public health and social justice crisis in the Republic of Ireland. While often hidden, its impact reverberates through families and communities. National data reveals an alarming and escalating emergency, underscoring the urgent need for innovative, accessible, and safe support mechanisms \cite{fra2024eugender, womensaid2024impact, mensaid2023annual, garda2024incidents}. For an individual experiencing abuse, seeking help is a labyrinth of psychological, social, and structural barriers, including fear, shame, stigma, and a lack of knowledge about available services \cite{saglam2024designing, ptsd_survivor_psychology, goodman2015open, hogg2006rural}.
+
+This project tackles this problem by proposing the design and specification of ``Safe-Talk Ireland,'' a specialised conversational agent (chatbot) for domestic abuse support. The purpose of this tool is not to replace human-led services but to act as a vital, supplementary first point of contact. It is designed to offer support that is immediate, anonymous, and accessible 24/7, directly counteracting many of the deterrents that prevent individuals from seeking help \cite{saglam2024designing}.
+
+\section{Motivation}
+The research area for this project lies at the intersection of Human-Computer Interaction (HCI), Artificial Intelligence (AI), and social support systems, specifically focusing on technology for vulnerable populations. The motivation is twofold: the escalating scale of domestic abuse in Ireland and the potential of emerging AI technologies to provide a novel form of support.
+
+Recent statistics highlight the project's importance. In 2023, Women's Aid documented its highest-ever level of contact, with a staggering 74\% rise in reported physical violence and an 87\% increase in economic abuse compared to the previous year \cite{womensaid2024impact}. An Garda Síochána responded to over 65,000 domestic abuse incidents in 2024 \cite{garda2024incidents}, and agencies like Tusla are under immense pressure, with child protection referrals having doubled since 2014 \cite{tusla2023annual, iasw2024referrals}. This overwhelming demand strains the existing support ecosystem, creating a critical implementation gap between protective legislation and the lived reality of survivors \cite{safeshelter2022, socialjustice2024budget}.
+
+Existing research supports the use of chatbots in sensitive contexts, as they offer a non-judgmental space for disclosure and can provide immediate, practical information \cite{saglam2024designing, zheng2025customizing}. However, a significant ``gap'' in existing research and practice is the safe and ethical application of Large Language Models (LLMs) in such a high-stakes domain. Standard LLMs are prone to ``hallucination''---generating plausible but factually incorrect information---which could have life-threatening consequences for a domestic abuse survivor \cite{lewis2020retrieval, zhao2024ragsurvey, kim2024breakthrough}.
+
+This project addresses this gap by proposing a Retrieval-Augmented Generation (RAG) architecture. RAG mitigates the risk of hallucination by grounding every response in a curated, verifiable knowledge base of Irish-specific legal and support information \cite{lewis2020retrieval, weka2024rag, kairntech2024rag, acceldaata2024rag}. This makes the chatbot's advice traceable and factually accurate, representing a crucial step forward from generic LLM applications. Furthermore, by integrating principles of trauma-informed design \cite{tseng2022trauma, zheng2024learning, uxcontent2025trauma}, this project aims to create a model for AI that is not only factually reliable but also psychologically safe for its users, addressing a critical need in the field.
+
+\section{Research Questions}
+To achieve the project's aim, the research will be guided by the following key questions:
+\begin{itemize}
+    \item What are the core informational, practical, and emotional needs of domestic abuse survivors in Ireland, and how can these be mapped to the functionalities of a RAG-based chatbot?
+    \item How can the principles of trauma-informed design and empathetic conversation be translated into a specific chatbot persona, dialogue flows, and interaction patterns suitable for this vulnerable user group?
+    \item What is the optimal architecture for a RAG pipeline that ensures factual accuracy, safety, and localisation by drawing from a curated knowledge base of Irish legal, NGO, and support service data?
+    \item What ethical protocols, including data privacy, user safety features, and pathways for escalation to human services, are necessary for the responsible deployment of such a chatbot in the Irish context?
+\end{itemize}
+
+\section{Structure of the Proposal}
+This document is structured as follows. Chapter \ref{chap:lit_review} provides a comprehensive Literature Review, covering the background of domestic abuse in Ireland and related work in conversational AI and trauma-informed design. Chapter \ref{chap:methodology} details the proposed Methodology for the project, outlining the phased approach to building the knowledge base, designing the RAG system, and establishing evaluation and safety protocols.
+
+% --- CHAPTER 2: LITERATURE REVIEW ---
+\chapter{Literature Review}
+\label{chap:lit_review}
+
+\section{Background: The Landscape of Domestic Abuse in the Irish Context}
+A comprehensive understanding of the domestic abuse landscape in Ireland is essential for designing an effective and relevant intervention. This requires a multi-faceted analysis encompassing the statistical prevalence of abuse, the legal and institutional frameworks designed to address it, and the critical role of the third-sector organisations providing frontline support.
+
+\subsection{Statistical Overview and Demographics}
+Domestic abuse is a deeply gendered crime in Ireland, with women being disproportionately affected. As established, 35\% of women in Ireland have experienced some form of intimate partner violence \cite{fra2024eugender}. Data from police records in 2022 show that women constituted 78\% of all domestic violence victims and 88\% of intimate partner violence victims \cite{eige2024ireland}. The abuse disclosed to services like Women's Aid spans a spectrum of harm, including emotional, physical, economic, and sexual violence, with recent data indicating a concerning surge in the rates of physical and economic abuse \cite{womensaid2024impact}.
+
+However, it is crucial to recognise that men are also victims of domestic abuse. In 2023, Men's Aid Ireland handled 8,682 contacts, with men reporting patterns of emotional abuse, physical violence, and coercive control that mirror the experiences of female survivors \cite{mensaid2023annual, mensaid2024press}. A significant challenge in understanding the true scale of male victimisation is under-reporting, driven by social stigma, embarrassment, and a fear of not being believed \cite{mensaid2023annual, saglam2024designing}. Some sources suggest that while service usage is approximately two-thirds female to one-third male, the actual prevalence may be closer to 50/50 when accounting for unreported cases \cite{askireland2024men}.
+
+Furthermore, vulnerability to domestic abuse is not uniform across the population. Certain groups face heightened risks and unique barriers. Older adults are an increasingly recognised cohort of victims, with reported crimes against those aged 60 and over showing a significant increase in recent years \cite{copni2023growing}. Disabled individuals are also at a higher risk; one UK study found that 12.4\% of disabled women experienced domestic abuse compared to 4\% of non-disabled women, and they often face the additional barrier of not being believed when they disclose \cite{saglam2024designing, ons2023disability}. The design of any support service must therefore be inclusive and cognisant of these diverse demographics and their specific needs.
+
+\subsection{The Legal and Institutional Framework}
+Ireland's state response to domestic abuse is anchored in a framework of legislation and statutory agencies. The cornerstone of modern Irish law in this area is the \textit{Domestic Violence Act 2018} \cite{irishstatutebook2018}. This landmark legislation significantly updated the legal landscape, most notably by creating the specific criminal offence of \textbf{coercive control} \cite{justice2019coercive}. This offence recognises the pattern of non-physical behaviours---such as intimidation, isolation, and psychological manipulation---that abusers use to exert power over a victim, acknowledging that abuse is often a sustained campaign of control rather than a series of isolated incidents \cite{dublincypsc2020}. The Act also provides for several types of civil court orders designed to protect victims, including \textbf{Safety Orders}, \textbf{Protection Orders}, and \textbf{Barring Orders}, which can prohibit an abuser from committing further violence and, in some cases, exclude them from the family home \cite{courtsie2024orders, lawsociety2018dva, citizensinfo2018dva}.
+
+Several key state agencies are tasked with implementing this framework. \textbf{An Garda Síochána} are the primary first responders. They are responsible for investigating domestic abuse as a crime, responding to emergency calls (receiving over 65,000 in 2024), and assisting victims in seeking legal protection \cite{garda2024incidents, justice2019coercive}. \textbf{Tusla, the Child and Family Agency}, plays a critical role in cases where children are involved. Domestic abuse is a significant factor in a high percentage of child welfare referrals, and Tusla is responsible for assessing risk and ensuring the protection and welfare of children in these households \cite{copegalway2022guide, tusla2022referrals, reddit2024tusla}. The agency has seen a dramatic increase in referrals, receiving almost 92,000 in 2023, double the number since its establishment in 2014, placing its services under immense pressure \cite{iasw2024referrals, tusla2023annual}. Finally, the \textbf{Legal Aid Board} provides legal advice and representation to eligible individuals seeking court orders, although accessing these services can present its own challenges for survivors \cite{justice2019coercive, legalaidboard2022submission, mensaid2022legalaid}.
+
+\subsection{The Third Sector: Frontline Support Services}
+The statutory framework is complemented by a vibrant and essential third sector of non-governmental organisations (NGOs) that provide the majority of direct, specialised support to survivors. At a national level, organisations like \textbf{Safe Ireland} focus on policy development, advocacy, and coordinating a network of local services \cite{safeireland2024, safeireland2024publications}, while \textbf{Women's Aid} operates the 24/7 National Freephone Helpline, providing immediate crisis support, information, and emotional validation to thousands of women each year \cite{fra2024eugender}. Specialist services such as \textbf{Men's Aid} offer tailored support for male victims, addressing their unique needs and the specific barriers they face \cite{mensaid2024}.
+
+At the local level, these national efforts are translated into direct services. This project proposes a pilot focus on County Galway, making \textbf{COPE Galway} a key stakeholder and case study. COPE Galway provides a comprehensive suite of domestic abuse services, centered around its modern refuge, \textbf{Modh Eile} \cite{saglam2024designing}. Opened in 2020, Modh Eile represents best practice in refuge design, moving away from communal living to provide nine self-contained apartments where women and their children (up to age 18) can live with privacy and dignity \cite{saglam2024designing}. Beyond accommodation, the service offers a 24/7 confidential helpline (091 565 985), extensive outreach support where caseworkers meet survivors in the community, court accompaniment, and advocacy \cite{copegalway2023annual, saglam2024designing}. A crucial component is the dedicated children's service, \textbf{Solas Óg}, which provides therapeutic support, play therapy, and peer groups for children and young people who have witnessed or experienced abuse \cite{copegalway2023annual, copegalway2022guide}.
+
+While Ireland possesses a progressive legal framework and a network of dedicated support services, a significant ``implementation gap'' exists between policy intent and the lived reality of survivors. The sheer volume of demand, evidenced by the record-breaking contact numbers for Women's Aid and the overwhelming referral rates to Tusla, consistently outstrips the capacity of the system \cite{womensaid2024impact, tusla2023annual}. This leads to staff burnout in support services, long waiting times for counselling, and a critical shortage of refuge accommodation that falls far short of the Council of Europe's recommendation of one family space per 10,000 population \cite{safeshelter2022, socialjustice2024budget, mcleanhospital2022shelterworkers}. Survivors often find the legal system difficult and re-traumatising to navigate, despite the availability of legal aid and protective orders \cite{mensaid2022legalaid, tandfonline2022laspo}. This gap between the promise of protection and the practical difficulty of accessing it is a critical area where a digital tool can intervene. By providing clear, step-by-step guidance on legal rights, court procedures, and how to effectively engage with agencies like Tusla and the Legal Aid Board, the proposed chatbot can empower users. It can equip them with the knowledge and confidence needed to navigate these complex systems, helping to bridge the chasm between the state's protective intent and the survivor's lived experience.
+
+\section{Related Work}
+To design a truly helpful tool, it is imperative to move beyond institutional frameworks and delve into the subjective experience of the survivor. This involves understanding their multifaceted needs, the profound psychological impact of trauma, and the powerful role that peer narratives can play. Furthermore, it requires a review of existing work in designing conversational agents for high-stakes support and the technological underpinnings that can ensure safety and accuracy.
+
+\subsection{The Survivor's Experience: Needs, Trauma, and Help-Seeking}
+The needs of a person experiencing domestic abuse are complex and can be broadly categorised into three interconnected domains: informational, practical, and emotional.
+
+\begin{itemize}
+    \item \textbf{Informational Needs:} A primary need is for clear, reliable information, often beginning with the fundamental step of \textbf{recognising the abuse} \cite{saglam2024designing, pdd2024}. Survivors need access to information that helps them identify the signs and patterns of abusive behaviour \cite{saglam2024designing, saglam2024designing}. They also require knowledge of their legal rights and available community resources \cite{saglam2024designing}.
+    \item \textbf{Practical Needs:} These are closely tied to informational needs. The most urgent is \textbf{safety planning} \cite{saglam2024designing, saglam2024designing}. This is followed by challenges such as securing safe housing, accessing financial assistance, and navigating social welfare applications \cite{saglam2024designing, dreamsdeferred2020, opdv2022safe}.
+    \item \textbf{Emotional Needs:} Survivors require \textbf{empathy and non-judgmental listening} \cite{sanjewa2024empathic}. A core function of support is to provide \textbf{validation}---reassuring the survivor that the abuse is not their fault and they are not alone \cite{saglam2024designing, saglam2024designing}.
+\end{itemize}
+
+Domestic abuse is a source of profound trauma, linked to Post-Traumatic Stress Disorder (PTSD), depression, anxiety, and suicidal ideation \cite{ptsd_survivor_psychology, mechanic2008ptsd, mcleanhospital2022dv, apa2023dv}. This necessitates a response that is explicitly \textbf{trauma-informed}, prioritising safety, trust, and empowerment to avoid re-traumatising the individual \cite{goodman2015open, apa2018ipvguide, wadvocates2022trauma}.
+
+Survivor narratives can be instrumental in reducing stigma and fostering hope \cite{storytelling2025mental, storytelling2024emhic, storytelling2023zero}. However, their use must be governed by a rigorous ethical framework centered on survivor consent, confidentiality, and agency \cite{oaesv2024ethical, uvic2022survivor, pmc2014digital}. The concept of \textbf{vicarious resilience}---the positive effect of witnessing another's recovery---provides a critical insight. By carefully presenting stories that focus on resilience and successful help-seeking, a chatbot can instill hope and model practical strategies, leveraging vicarious resilience while minimising the risk of vicarious trauma \cite{ovc2017vicarious, reffold2025vicarious, rubel2024vicarious}.
+
+\subsection{Designing Conversational Agents for High-Stakes Human Support}
+The design of a conversational agent for a vulnerable population requires a synthesis of principles from HCI, conversational design, and psychology. A foundational requirement is a clear and appropriate \textbf{persona} \cite{salesgroup2025persona, chatbotcom2025persona, uxmag2022persona}. In a support context, the persona must be empathetic, warm, and non-judgmental \cite{saglam2024designing}. Studies show a social-oriented communication style boosts user satisfaction and trust \cite{tandfonline2024navigating, frontiers2022social}. The conversation should be natural, brief, and contextual \cite{thestory2024conversation}.
+
+The emerging field of \textbf{trauma-informed computing} provides a more rigorous framework, adapting principles from human services to technology design \cite{tseng2022trauma, zheng2024learning}. The six core principles are: Safety, Trustworthiness \& Transparency, Peer Support, Collaboration \& Mutuality, Empowerment, Voice \& Choice, and Cultural, Historical, \& Gender Sensitivity \cite{zheng2024learning}. Adopting this framework allows for the creation of a \textbf{trauma-informed persona}, which is intentionally designed to be predictable, transparent, and empowering, moving beyond generic ``empathetic AI'' to a clinically-grounded, safer model of interaction \cite{tseng2022trauma, uxcontent2025trauma, reddit2025ethicalai}.
+
+\subsection{Retrieval-Augmented Generation (RAG) for Factual and Safe AI}
+The selection of Retrieval-Augmented Generation (RAG) is a deliberate choice driven by the need for accuracy and safety. A standard LLM is prone to ``hallucination,'' generating false information, which is a catastrophic failure in this context \cite{lewis2020retrieval, zhao2024ragsurvey, weka2024rag}. RAG mitigates this risk by first retrieving relevant, verified information from a curated knowledge base and then using that information to ground the LLM's response \cite{lewis2020retrieval, kairntech2024rag, intersystems2024rag}.
+
+This paradigm offers three key advantages:
+\begin{enumerate}
+    \item \textbf{Accuracy and Factual Grounding:} RAG grounds every response in a pre-verified source of truth, ensuring information is factually correct and reliable \cite{lewis2020retrieval, acceldaata2024rag, weka2024rag, shelf2024rag, quora2024rag}.
+    \item \textbf{Transparency and Trust:} Because the response is based on specific retrieved documents, the system can cite its sources, allowing users to verify information and fostering trust \cite{kairntech2024rag, airbyte2024rag}.
+    \item \textbf{Safety and Control:} The RAG model's knowledge is confined to the curated knowledge base, preventing it from accessing or repeating harmful information from the open internet and ensuring compliance with data privacy regulations like GDPR \cite{weka2024rag, kairntech2024rag, quora2024ragsecure, rag_safety_vectara, rag_safety_digitalocean}.
+\end{enumerate}
+Strategically, RAG allows for dynamic, localised support. The knowledge base can be continuously updated with the latest information without costly retraining of the entire LLM, ensuring the chatbot's advice remains current and relevant \cite{lewis2020retrieval, weka2024rag}.
+
+% --- CHAPTER 3: METHODOLOGY ---
+\chapter{Methodology}
+\label{chap:methodology}
+
+This chapter details the proposed five-phase methodology for the research and development of the ``Safe-Talk Ireland'' chatbot. The approach is iterative, user-centred, and rigorously grounded in the principles of trauma-informed computing, ensuring that ethical considerations and survivor safety are paramount at every stage.
+
+\section{Phase I: Curation of a Localised, Vetted Knowledge Base (KB)}
+The foundation of a reliable RAG system is the quality of its knowledge base. This phase is dedicated to the systematic collection, cleaning, and structuring of a comprehensive repository of information specific to domestic abuse in Ireland, with a pilot focus on County Galway.
+
+\subsection{Data Sourcing Strategy}
+A multi-pronged data collection strategy will be employed.
+\begin{itemize}
+    \item \textbf{Legal and Governmental Sources:} Official documentation from Irish state bodies, including the \textit{Domestic Violence Act 2018} \cite{irishstatutebook2018}, and information from the Department of Justice \cite{justice2019coercive, justice2019coercive}, the Courts Service \cite{courtsie2024orders}, the Legal Aid Board \cite{legalaidboard2022submission}, and Citizens Information \cite{citizensinfo2018dva}.
+    \item \textbf{NGO and Third-Sector Sources:} Materials from national organisations like Women's Aid \cite{fra2024eugender, womensaid2024handbook}, Men's Aid \cite{mensaid2023annual, mensaid2024}, and Safe Ireland \cite{safeireland2024, safeireland2024publications}, and local Galway services from COPE Galway \cite{copegalway2023annual, copegalway2022guide, saglam2024designing, copegalway2022guide}.
+    \item \textbf{Academic and Research Sources:} Peer-reviewed literature will inform the chatbot's understanding of survivor needs and trauma-informed design \cite{saglam2024designing, ptsd_survivor_psychology, saglam2024designing, saglam2024designing, zheng2024learning}.
+    \item \textbf{Survivor Narratives:} Ethically sourced, anonymised, and consent-driven survivor testimonials will be included, focusing on resilience and recovery to foster hope \cite{storytelling2025mental, oaesv2024ethical, pmc2014digital}. Explicit, informed, and reversible consent will be the guiding principle \cite{oaesv2024ethical}.
+\end{itemize}
+
+\subsection{Data Preparation and Structuring}
+Raw data will be meticulously prepared for ingestion.
+\begin{itemize}
+    \item \textbf{Chunking Strategy:} Documents will be segmented into small, semantically coherent chunks, respecting logical boundaries to preserve context, a best practice for retrieval accuracy \cite{rag_best_practices_orkes, rag_best_practices_astera}.
+    \item \textbf{Metadata Tagging:} Each chunk will be enriched with structured metadata tags (e.g., source, topic, audience, location) to allow for highly specific, context-aware retrieval \cite{rag_best_practices_orkes, rag_best_practices_astera}.
+\end{itemize}
+
+\begin{table}[h!]
+\centering
+\caption{Sample Structure for the Knowledge Base Source Matrix}
+\label{tab:kb_matrix}
+\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}
+\hline
+\textbf{Data Source} & \textbf{Information Category} & \textbf{Key Metadata Tags} & \textbf{Rationale for Inclusion} \\
+\hline
+Department of Justice & Legal Rights \& Definitions & `legal', `coercive\_control', `national' & Provides foundational legal definitions of abuse and offenses in Ireland. Essential for accuracy. \\
+\hline
+COPE Galway & Local Services \& Refuge & `local\_service', `refuge', `galway', `women', `children' & Provides specific, actionable information on support available in the pilot location of Galway. \\
+\hline
+Men's Aid Ireland & Male Survivor Support & `male\_survivor', `helpline', `national', `statistics' & Offers tailored information relevant to male victims, ensuring inclusivity. \\
+\hline
+Women's Aid & Safety Planning & `safety\_plan', `practical\_advice', `national' & Contains expert-vetted, practical guidance for survivors on increasing safety. \\
+\hline
+Tusla & Child Support & `child\_support', `tusla', `reporting', `national' & Informs responses related to the welfare of children, a critical concern. \\
+\hline
+Ethically Sourced Story & Peer Support \& Resilience & `survivor\_story', `resilience', `hope' & To provide hope and reduce isolation by showing recovery is possible, used only with explicit consent. \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Phase II: RAG System Architecture and Implementation}
+This phase covers the technical design and build of the RAG pipeline.
+
+\subsection{Model and Component Selection}
+\begin{itemize}
+    \item \textbf{Retriever:} A dense retriever, likely based on a Sentence-BERT (SBERT) architecture, will be fine-tuned on a custom dataset of Irish-specific questions to ensure it excels at identifying the most relevant document chunks.
+    \item \textbf{Generator:} A powerful Large Language Model (LLM), such as an open-source model like Llama 3 or a proprietary model via API like GPT-4, will be selected based on performance, cost, and data privacy guarantees.
+    \item \textbf{Vector Database:} Text chunks will be converted into numerical embeddings and stored in a specialised vector database (e.g., Pinecone, ChromaDB) optimised for fast semantic similarity search \cite{rag_best_practices_orkes, rag_best_practices_astera}.
+\end{itemize}
+
+\subsection{The RAG Pipeline}
+The end-to-end system will operate through a defined pipeline to ensure every response is grounded and contextualised \cite{saglam2024designing, lewis2020retrieval, rag_pipeline_ijcrt}:
+\begin{enumerate}
+    \item \textbf{Query Input:} The system receives a user query.
+    \item \textbf{Query Embedding:} The query is converted into a vector representation.
+    \item \textbf{Context Retrieval:} The vector database returns the 'top-k' most semantically similar text chunks from the knowledge base.
+    \item \textbf{Prompt Augmentation:} The retrieved chunks are combined with the original query and a carefully crafted instruction prompt.
+    \item \textbf{Response Generation:} The augmented prompt is sent to the LLM generator.
+    \item \textbf{Grounded Response:} The LLM synthesises the information to generate a coherent, natural-language response.
+    \item \textbf{Output Delivery:} The final response is delivered, with citations to the source documents to enhance transparency \cite{kairntech2024rag, airbyte2024rag}.
+\end{enumerate}
+
+\subsection{Development Tools and Workflow}
+To facilitate the development process, this project will leverage specialised open-source tools designed for building RAG applications.
+\begin{itemize}
+    \item \textbf{Crawl4AI:} For the data sourcing and knowledge base creation phase (Phase I), \textbf{Crawl4AI} will be utilised. This tool is designed to automate the process of scraping and extracting clean, structured information from websites. Its justification lies in its efficiency; it can systematically gather content from the specified legal, governmental, and NGO websites, converting unstructured web pages into a clean format suitable for the chunking and embedding process. This significantly accelerates the creation of a comprehensive and up-to-date knowledge base, which is the cornerstone of the RAG system.
+    \item \textbf{Open WebUI:} For the user-facing interface and evaluation phases (Phase III, IV, and V), \textbf{Open WebUI} will be employed as the front-end for the chatbot prototype. This choice is justified by its flexibility and user-centric design. Open WebUI is compatible with a wide range of LLM backends, allowing for easy integration with the chosen generator model. Its open-source nature means it can be customised to incorporate the specific trauma-informed design features required for this project, such as a persistent ``Quick Exit'' button and a clear, non-intrusive onboarding process. Its intuitive interface is also ideal for conducting heuristic evaluations with experts and user-based testing with proxy groups, as it provides a realistic and accessible chat environment.
+\end{itemize}
+
+\section{Phase III: Trauma-Informed Conversational and Persona Design}
+This phase focuses on crafting the user-facing aspects of the chatbot, ensuring the interaction is psychologically safe and empathetic.
+
+\subsection{Persona Definition}
+The chatbot, ``Safe-Talk,'' will be designed with a persona that is:
+\begin{itemize}
+    \item \textbf{Empathetic and Validating:} Using phrases like ``That sounds incredibly difficult'' and ``It's not your fault'' \cite{saglam2024designing, saglam2024designing}.
+    \item \textbf{Calm, Patient, and Predictable:} A consistent and reassuring tone to create a sense of safety.
+    \item \textbf{Clear and Simple:} Using plain language, short sentences, and bullet points.
+    \item \textbf{Transparent and Humble:} Being upfront about its AI identity and limitations, managing user expectations and building trust \cite{saglam2024designing}.
+\end{itemize}
+
+\subsection{Dialogue Flow Design}
+The conversational structure will be meticulously planned.
+\begin{itemize}
+    \item \textbf{Onboarding:} The first interaction will introduce the chatbot as an AI, state its purpose and limitations, present the ``Quick Exit'' button, and provide a link to its privacy policy \cite{saglam2024designing}.
+    \item \textbf{Interaction Loop:} The chatbot will use clarifying questions (e.g., ``To help me find the right information, could you tell me...?'') and reflective listening to ensure understanding and build rapport \cite{saglam2024designing}.
+    \item \textbf{Response Structure:} Answers will be short and scannable, using lists and bolded keywords to reduce cognitive load for users in distress \cite{saglam2024designing}.
+\end{itemize}
+
+\subsection{Integrating Survivor Narratives}
+The integration of survivor stories will be handled with extreme care. Narratives will be offered as an optional, opt-in resource to respect user choice \cite{zheng2024learning}. For example, ``Some people find it helpful to hear how others have handled this. Would you like to read a short, anonymous story?'' This approach gives the user full control. All narratives will be fully anonymised and used only with explicit, informed consent \cite{oaesv2024ethical}.
+
+\begin{table}[h!]
+\centering
+\caption{Mapping Trauma-Informed Principles to Chatbot Features}
+\label{tab:trauma_informed}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|p{2.5cm}|p{3.5cm}|p{5cm}|p{4cm}|}
+\hline
+\textbf{Trauma-Informed Principle} & \textbf{Corresponding Chatbot Feature} & \textbf{Dialogue Example} & \textbf{Rationale/Impact on User} \\
+\hline
+\textbf{Safety} & Persistent ``Quick Exit'' button. Clear statement of non-emergency role. Proactive detection of crisis keywords. & ``If you are in immediate danger, please close this chat and call 999 now.'' & Prioritises physical safety. Creates psychological safety with an escape route. \\
+\hline
+\textbf{Trustworthiness \& Transparency} & Clear AI self-introduction. Citing sources for information provided. & ``I'm an AI assistant. The details about Safety Orders come directly from the Courts Service of Ireland.'' & Builds trust by managing expectations and providing verifiable, authoritative information. \\
+\hline
+\textbf{Peer Support} & Optional, consent-based sharing of anonymised survivor narratives focused on resilience. & ``It can feel very lonely. Would you like to read a short, anonymous story from someone in a similar situation?'' & Reduces isolation and fosters hope by showing recovery is possible. \\
+\hline
+\textbf{Collaboration \& Mutuality} & Using clarifying questions and reflective listening. & ``Let's work through this together. What feels most important to you right now: housing, legal, or safety?'' & Levels the power dynamic, making the user an active participant. \\
+\hline
+\textbf{Empowerment, Voice \& Choice} & Always presenting options rather than directives. & ``There are a few options you could consider. Which would feel most helpful to you?'' & Restores a sense of agency and control often taken away by abuse. \\
+\hline
+\textbf{Cultural, Historical \& Gender Sensitivity} & Inclusive language. Access to information for specific groups (e.g., male survivors). & ``Abuse can happen to anyone. If you are a man experiencing abuse, Men's Aid can help. Would you like their details?'' & Ensures the chatbot is relevant and welcoming to all users. \\
+\hline
+\end{tabular}%
+}
+\end{table}
+
+\section{Phase IV: Ethical and Safety Protocol Implementation}
+This phase is dedicated to building robust safety features and ethical guardrails into the chatbot's architecture.
+
+\subsection{User Safety Features}
+\begin{itemize}
+    \item \textbf{Quick Exit Mechanism:} A persistent ``Quick Exit'' button will immediately close the chat, redirect to a neutral website, and clear the browser session history \cite{saglam2024designing}.
+    \item \textbf{Data Anonymization and Deletion:} The system will not store Personally Identifiable Information (PII). Users will have the option to delete their conversation history permanently \cite{saglam2024designing, saglam2024designing}.
+\end{itemize}
+
+\subsection{Risk Mitigation and Escalation Pathway}
+The chatbot must recognise and respond to acute crisis.
+\begin{itemize}
+    \item \textbf{Crisis Keyword Detection:} A system will monitor for high-risk keywords related to immediate danger or suicidal ideation.
+    \item \textbf{Emergency Escalation Protocol:} If a high-risk keyword is detected, the standard flow will be interrupted. A clear message will urge the user to contact emergency services (An Garda Síochána on 999/112) and provide the number for a 24/7 crisis helpline.
+\end{itemize}
+
+\section{Phase V: Proposed Evaluation Framework}
+A multi-faceted, mixed-methods evaluation framework is proposed.
+
+\subsection{Technical Evaluation}
+The accuracy and relevance of the RAG system will be quantitatively measured using established frameworks like RAGAs (Retrieval-Augmented Generation Assessment). Key metrics will include Faithfulness, Answer Relevance, and Context Precision/Recall.
+
+\subsection{Heuristic Evaluation by Experts}
+A panel of domain experts (social workers, legal professionals, psychologists) will conduct a heuristic evaluation against the principles outlined in Table \ref{tab:trauma_informed}, providing qualitative feedback on the chatbot's tone, safety, and accuracy.
+
+\subsection{User-Based Evaluation}
+Initial user-based evaluation will be conducted with carefully selected \textbf{proxy user groups} (e.g., social work students, advocates) in controlled environments to mitigate ethical risks.
+\begin{itemize}
+    \item \textbf{Methodology:} Participants will complete tasks using the chatbot (e.g., ``Find out how to apply for a Barring Order'').
+    \item \textbf{Quantitative Metrics:} Standardised usability questionnaires (e.g., System Usability Scale) and custom Likert scales will measure perceived empathy, trustworthiness, and psychological safety.
+    \item \textbf{Qualitative Metrics:} Semi-structured interviews will gather rich, contextual feedback on the user experience, clarity of information, and appropriateness of the persona.
+\end{itemize}
+
+% --- BIBLIOGRAPHY ---
+\bibliographystyle{IEEEtran}
+\bibliography{references}
+
+\end{document}
+% --- DOCUMENT END ---
