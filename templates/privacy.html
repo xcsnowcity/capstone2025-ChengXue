@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Information | Irish DV Support</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="quick-exit-container">
+        <button id="quick-exit-btn" class="quick-exit-btn" onclick="quickExit()">
+            ⚠️ Quick Exit
+        </button>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>🔒 Privacy & Confidentiality</h1>
+            <p class="subtitle">Your privacy and safety are our highest priorities</p>
+        </header>
+
+        <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <h2>🛡️ How We Protect Your Privacy</h2>
+            
+            <h3>No Personal Information Required</h3>
+            <ul>
+                <li>You don't need to provide your name, email, or any personal details</li>
+                <li>All conversations are completely anonymous</li>
+                <li>We don't track your location or IP address for identification</li>
+            </ul>
+
+            <h3>No Data Storage</h3>
+            <ul>
+                <li>Your messages are not saved after your session ends</li>
+                <li>No conversation history is kept on our servers</li>
+                <li>All session data is deleted when you leave or use Quick Exit</li>
+            </ul>
+
+            <h3>Secure Communication</h3>
+            <ul>
+                <li>All data is encrypted during transmission</li>
+                <li>No cookies are used to track you across websites</li>
+                <li>Sessions automatically expire after 30 minutes of inactivity</li>
+            </ul>
+
+            <h3>Quick Exit Feature</h3>
+            <ul>
+                <li>Immediately clears all session data</li>
+                <li>Redirects to Google to hide your visit</li>
+                <li>Available at all times via the red button or pressing Escape</li>
+            </ul>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>⚖️ Legal Compliance</h2>
+            
+            <h3>GDPR Compliance</h3>
+            <p>This service complies with EU General Data Protection Regulation (GDPR) and Irish data protection laws:</p>
+            <ul>
+                <li>We process no personal data that could identify you</li>
+                <li>Anonymous usage statistics may be collected for service improvement</li>
+                <li>You have the right to request information about any data processing</li>
+            </ul>
+
+            <h3>Limitations</h3>
+            <ul>
+                <li>This AI assistant is for information only, not professional counseling</li>
+                <li>In crisis situations, we encourage contacting emergency services</li>
+                <li>We cannot provide legal advice - consult with qualified professionals</li>
+            </ul>
+
+            <hr style="margin: 30px 0;">
+
+            <h2>📞 Additional Support</h2>
+            <div style="background: #f0f4f0; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <h3>24/7 Confidential Support</h3>
+                <p><strong>Women's Aid Helpline:</strong> <a href="tel:1800341900">1800 341 900</a></p>
+                <p><strong>Emergency Services:</strong> <a href="tel:999">999</a> or <a href="tel:112">112</a></p>
+                <p><strong>Samaritans:</strong> <a href="tel:116123">116 123</a></p>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="/" style="background: #2c5a3e; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block;">
+                    ← Return to Chat
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

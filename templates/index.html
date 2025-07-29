@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irish Domestic Violence Support | Confidential AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    
+    <!-- Security headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+</head>
+<body>
+    <!-- Quick Exit Button - Always Visible -->
+    <div class="quick-exit-container">
+        <button id="quick-exit-btn" class="quick-exit-btn" onclick="quickExit()">
+            ⚠️ Quick Exit
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🇮🇪 Confidential Support</h1>
+                <p class="subtitle">AI Assistant for Domestic Violence Survivors in Ireland</p>
+                <div class="emergency-info">
+                    <p><strong>Emergency:</strong> <a href="tel:999">999</a> or <a href="tel:112">112</a></p>
+                    <p><strong>Women's Aid:</strong> <a href="tel:1800341900">1800 341 900</a> (24/7, Free)</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Important Notice -->
+        <div class="notice-banner">
+            <h3>⚠️ Important Information</h3>
+            <ul>
+                <li><strong>This is an AI assistant</strong> - For emergencies, call 999/112</li>
+                <li><strong>Confidential:</strong> No personal information is stored</li>
+                <li><strong>Anonymous:</strong> You don't need to provide your name</li>
+                <li><strong>Quick Exit:</strong> Use the red button above to clear session and leave</li>
+            </ul>
+        </div>
+
+        <!-- Chat Interface -->
+        <div class="chat-container">
+            <div id="chat-messages" class="chat-messages">
+                <!-- Welcome message -->
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <h4>Welcome - You're Safe Here</h4>
+                        <p>I'm here to provide information about domestic violence support in Ireland. I can help you understand:</p>
+                        <ul>
+                            <li>Your rights and legal options</li>
+                            <li>Support services in your area</li>
+                            <li>Safety planning</li>
+                            <li>Court orders and legal processes</li>
+                        </ul>
+                        <p><strong>How can I help you today?</strong></p>
+                        <p class="small-text">💡 Try asking: "What is coercive control?" or "How do I get a safety order?"</p>
+                        <p class="small-text">📏 <strong>Tip:</strong> Use the Brief/Balanced/Detailed buttons below to control response length</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea 
+                        id="message-input" 
+                        placeholder="Type your question here... (Press Enter to send)"
+                        rows="3"
+                        maxlength="500"></textarea>
+                    <button id="send-btn" class="send-btn" onclick="sendMessage()">
+                        Send
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span class="char-count">0/500</span>
+                    <div class="response-length-controls">
+                        <span class="control-label">Response:</span>
+                        <button id="brief-btn" class="length-btn" onclick="setResponseLength('brief')" title="Short, essential info only">Brief</button>
+                        <button id="adaptive-btn" class="length-btn active" onclick="setResponseLength('adaptive')" title="Balanced detail (default)">Balanced</button>
+                        <button id="detailed-btn" class="length-btn" onclick="setResponseLength('detailed')" title="Comprehensive information">Detailed</button>
+                    </div>
+                    <button id="clear-btn" class="clear-btn" onclick="clearHistory()">
+                        Clear History
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-links">
+                <a href="/privacy">Privacy</a>
+                <a href="/safety">Safety Tips</a>
+                <a href="https://www.safeireland.ie" target="_blank">Safe Ireland</a>
+                <a href="https://www.womensaid.ie" target="_blank">Women's Aid</a>
+            </div>
+            <p class="disclaimer">
+                This AI assistant provides information from Irish domestic violence organizations. 
+                For professional support, contact Women's Aid: 1800 341 900
+            </p>
+        </footer>
+    </div>
+
+    <!-- Loading overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Getting information...</p>
+    </div>
+
+    <!-- Crisis Modal -->
+    <div id="crisis-modal" class="modal" style="display: none;">
+        <div class="modal-content crisis-modal">
+            <h2>🚨 Immediate Help Available</h2>
+            <div class="crisis-contacts">
+                <div class="contact-card emergency">
+                    <h3>Emergency Services</h3>
+                    <p>If you're in immediate danger:</p>
+                    <a href="tel:999" class="contact-btn emergency-btn">Call 999</a>
+                    <a href="tel:112" class="contact-btn emergency-btn">Call 112</a>
+                </div>
+                <div class="contact-card support">
+                    <h3>24/7 Support</h3>
+                    <p>Free, confidential help:</p>
+                    <a href="tel:1800341900" class="contact-btn support-btn">Women's Aid: 1800 341 900</a>
+                    <a href="tel:116123" class="contact-btn support-btn">Samaritans: 116 123</a>
+                </div>
+            </div>
+            <button onclick="closeCrisisModal()" class="close-modal-btn">Continue Chat</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
