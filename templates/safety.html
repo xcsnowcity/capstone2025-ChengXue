@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safety Information | Irish DV Support</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="quick-exit-container">
+        <button id="quick-exit-btn" class="quick-exit-btn" onclick="quickExit()">
+            ⚠️ Quick Exit
+        </button>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>🛡️ Safety Information</h1>
+            <p class="subtitle">Important safety tips for survivors of domestic violence</p>
+        </header>
+
+        <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            
+            <div style="background: #ffebee; border: 2px solid #d32f2f; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                <h2 style="color: #d32f2f;">🚨 Emergency Contacts</h2>
+                <div style="display: grid; gap: 15px;">
+                    <div>
+                        <strong>Immediate Danger:</strong><br>
+                        <a href="tel:999" style="background: #d32f2f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px;">Call 999</a>
+                        <a href="tel:112" style="background: #d32f2f; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px;">Call 112</a>
+                    </div>
+                    <div>
+                        <strong>24/7 Support:</strong><br>
+                        <a href="tel:1800341900" style="background: #2c5a3e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 5px;">Women's Aid: 1800 341 900</a>
+                    </div>
+                    <div>
+                        <strong>Crisis Text:</strong><br>
+                        Text "Hi" to <strong>50818</strong> for instant message support
+                    </div>
+                </div>
+            </div>
+
+            <h2>💻 Digital Safety</h2>
+            <h3>Using This Website Safely</h3>
+            <ul>
+                <li><strong>Quick Exit:</strong> Use the red "Quick Exit" button or press Escape key</li>
+                <li><strong>Private Browsing:</strong> Use incognito/private mode when possible</li>
+                <li><strong>Clear History:</strong> Delete browser history after use</li>
+                <li><strong>Safe Computer:</strong> Only use on computers that your abuser cannot access</li>
+            </ul>
+
+            <h3>Phone & Computer Safety</h3>
+            <ul>
+                <li>Change passwords on accounts your abuser might access</li>
+                <li>Check for tracking apps on your devices</li>
+                <li>Be aware of shared cloud storage (photos, documents)</li>
+                <li>Consider using a trusted friend's device if yours isn't safe</li>
+            </ul>
+
+            <h2>🏠 Personal Safety Planning</h2>
+            <h3>If You're Still Living Together</h3>
+            <ul>
+                <li>Identify safe rooms with exits and avoid kitchens/bathrooms</li>
+                <li>Keep important documents and cash in a safe place</li>
+                <li>Have a code word with trusted friends/family for emergencies</li>
+                <li>Memorize important phone numbers</li>
+            </ul>
+
+            <h3>Emergency Bag</h3>
+            <p>Keep these items accessible if you need to leave quickly:</p>
+            <ul>
+                <li>Identification (passport, driver's license)</li>
+                <li>Important documents (birth certificates, marriage certificate)</li>
+                <li>Money and bank cards</li>
+                <li>Medications</li>
+                <li>Children's items (if applicable)</li>
+                <li>Change of clothes</li>
+                <li>Keys (house, car)</li>
+            </ul>
+
+            <h2>⚖️ Legal Protection</h2>
+            <h3>Court Orders Available in Ireland</h3>
+            <ul>
+                <li><strong>Safety Order:</strong> Prevents violence or threats</li>
+                <li><strong>Barring Order:</strong> Requires abuser to leave the home</li>
+                <li><strong>Protection Order:</strong> Temporary protection while applying for other orders</li>
+            </ul>
+
+            <h3>Reporting to Gardaí</h3>
+            <ul>
+                <li>You can report domestic violence at any Garda station</li>
+                <li>Coercive control is a criminal offence in Ireland</li>
+                <li>You don't have to press charges immediately</li>
+                <li>Ask for a female Garda if you prefer</li>
+            </ul>
+
+            <h2>🤝 Support Services</h2>
+            <h3>What's Available</h3>
+            <ul>
+                <li>Emergency accommodation</li>
+                <li>Court accompaniment</li>
+                <li>Counseling and support groups</li>
+                <li>Help with housing and benefits</li>
+                <li>Children's support services</li>
+            </ul>
+
+            <div style="background: #f0f4f0; padding: 20px; border-radius: 8px; margin: 30px 0;">
+                <h3>Remember</h3>
+                <ul>
+                    <li>✅ <strong>It's not your fault</strong> - abuse is never acceptable</li>
+                    <li>✅ <strong>You deserve help</strong> - support is available</li>
+                    <li>✅ <strong>You're not alone</strong> - thousands of people understand</li>
+                    <li>✅ <strong>You can get through this</strong> - there is hope</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="/" style="background: #2c5a3e; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px;">
+                    ← Return to Chat
+                </a>
+                <a href="/privacy" style="background: #666; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px;">
+                    Privacy Information
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
