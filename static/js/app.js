@@ -1,6 +1,3 @@
-// Irish Domestic Violence Support Chatbot - Frontend JavaScript
-// Trauma-informed interface with safety features
-
 class DVSupportChatbot {
     constructor() {
         this.messageInput = document.getElementById('message-input');
