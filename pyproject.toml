@@ -1,7 +1,7 @@
 [project]
 name = "capstone-project"
 version = "0.1.0"
-description = "Add your description here"
+description = "domestic abuse support chatbot for Ireland"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -15,4 +15,5 @@ dependencies = [
     "flask>=2.3.0",
     "flask-cors>=4.0.0",
     "markupsafe>=2.1.0",
+    "beautifulsoup4>=4.13.4",
 ]
