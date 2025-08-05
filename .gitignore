@@ -17,3 +17,5 @@ Timeline-main/
 cited resources/
 meeting audio/
 AnswerConfig.ts
+chroma_db/chroma.sqlite3
+*.sqlite3
