@@ -662,18 +662,18 @@ These organizations have comprehensive information and trained support staff."""
 
 def demo_rag_pipeline():
     
-    print("🇮🇪 Irish Domestic Violence RAG Pipeline Demo")
+    print("Irish Domestic Violence RAG Pipeline Demo")
     print("=" * 60)
-    print("⚠️  Note: This demo uses local models. For production, consider OpenAI/Claude for better responses.")
+    print("Note: This demo uses local models. For production, consider OpenAI/Claude for better responses.")
     print()
     
     # Initialize RAG pipeline
     try:
         rag = DomesticViolenceRAG(llm_provider="ollama", model_name="llama3.2")
-        print("✅ RAG pipeline initialized with Ollama")
+        print(" RAG pipeline initialized with Ollama")
     except Exception as e:
-        print(f"❌ Could not initialize RAG pipeline: {e}")
-        print("💡 Make sure you have Ollama installed and llama3.2 model downloaded")
+        print(f" Could not initialize RAG pipeline: {e}")
+        print(" Make sure you have Ollama installed and llama3.2 model downloaded")
         print("   Run: ollama pull llama3.2")
         return
     
@@ -687,19 +687,19 @@ def demo_rag_pipeline():
     ]
     
     for i, query in enumerate(test_queries, 1):
-        print(f"\n🔍 Query {i}: '{query}'")
+        print(f"\n Query {i}: '{query}'")
         print("-" * 50)
         
         try:
             result = rag.process_query(query)
             
             if result['is_crisis']:
-                print("🚨 CRISIS DETECTED")
+                print(" CRISIS DETECTED")
             
-            print(f"📝 Response:\n{result['response']}")
+            print(f" Response:\n{result['response']}")
             
             if result['sources']:
-                print(f"\n📚 Sources ({len(result['sources'])}):")
+                print(f"\n Sources ({len(result['sources'])}):")
                 for j, source in enumerate(result['sources'][:3], 1):
                     print(f"  {j}. [{source['organization']}] {source['content_type']} "
                           f"(Relevance: {source['relevance']:.2f})")
@@ -708,8 +708,8 @@ def demo_rag_pipeline():
             print(f"❌ Error processing query: {e}")
     
     print(f"\n" + "=" * 60)
-    print("✅ RAG Pipeline Demo Complete")
-    print("🔄 Ready for integration with Open WebUI or other chat interfaces")
+    print(" RAG Pipeline Demo Complete")
+    print(" Ready for integration with Open WebUI or other chat interfaces")
 
 if __name__ == "__main__":
     demo_rag_pipeline()

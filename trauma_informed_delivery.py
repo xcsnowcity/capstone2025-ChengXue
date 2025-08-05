@@ -293,7 +293,7 @@ def create_trauma_informed_guidelines() -> Dict[str, Any]:
 
 if __name__ == "__main__":
     # Demo the trauma-informed delivery system
-    print("🛡️ Trauma-Informed Narrative Delivery System")
+    print(" Trauma-Informed Narrative Delivery System")
     print("=" * 55)
     
     delivery_system = TraumaInformedDelivery()
@@ -312,7 +312,7 @@ if __name__ == "__main__":
     trauma_risk = delivery_system.assess_trauma_risk(sample_story['content'])
     narrative_types = delivery_system.identify_narrative_type(sample_story['content'], sample_story['metadata'])
     
-    print(f"📊 Analysis Results:")
+    print(f" Analysis Results:")
     print(f"   Trauma Risk: {trauma_risk.value}")
     print(f"   Narrative Types: {[nt.value for nt in narrative_types]}")
     
@@ -321,15 +321,15 @@ if __name__ == "__main__":
         sample_story['content'], sample_story['metadata']
     )
     
-    print(f"\n📝 Trauma-Informed Framing:")
+    print(f"\n Trauma-Informed Framing:")
     for key, value in framing.items():
         print(f"   {key}: {value}")
     
     # Validate delivery
     validation = delivery_system.validate_story_delivery(sample_story, "moderate_vulnerability")
     
-    print(f"\n✅ Delivery Validation:")
+    print(f"\n Delivery Validation:")
     print(f"   Should Deliver: {validation['should_deliver']}")
     print(f"   Modifications: {validation['modifications_needed']}")
     
-    print(f"\n📋 Guidelines created - ready for integration with RAG pipeline")
+    print(f"\n Guidelines created - ready for integration with RAG pipeline")

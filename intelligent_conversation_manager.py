@@ -397,7 +397,7 @@ You don't have to face this alone. Help is available right now."""
 
 def demo_intelligent_conversation():
     
-    print("🤖 Intelligent Conversation Manager Demo")
+    print("Intelligent Conversation Manager Demo")
     print("=" * 50)
     print("This simulates the conversation management phase before RAG pipeline")
     print()
@@ -408,7 +408,7 @@ def demo_intelligent_conversation():
             llm_provider="openrouter",
             model_name="anthropic/claude-3.5-haiku"
         )
-        print("✅ Intelligent Conversation Manager initialized")
+        print("Intelligent Conversation Manager initialized")
         
         # Create sample user profile
         user_profile = UserProfile(session_id="demo_session")
@@ -424,17 +424,17 @@ def demo_intelligent_conversation():
         ]
         
         for i, message in enumerate(test_messages, 1):
-            print(f"\n🔍 Test {i}: '{message}'")
+            print(f"\n Test {i}: '{message}'")
             print("-" * 40)
             
             try:
                 result = manager.process_message(message, user_profile, conversation_history)
                 
-                print(f"📝 Response: {result['response'][:150]}...")
-                print(f"🎯 Action: {result['action']}")
-                print(f"📊 Profile Updates: {result['profile_updates']}")
-                print(f"🔍 Reasoning: {result['reasoning']}")
-                print(f"⚠️  Crisis Detected: {result['safety_triggered']}")
+                print(f"Response: {result['response'][:150]}...")
+                print(f"Action: {result['action']}")
+                print(f"Profile Updates: {result['profile_updates']}")
+                print(f"Reasoning: {result['reasoning']}")
+                print(f"Crisis Detected: {result['safety_triggered']}")
                 
                 # Update profile for next iteration
                 if result['profile_updates']:
@@ -447,14 +447,14 @@ def demo_intelligent_conversation():
                 })
                 
             except Exception as e:
-                print(f"❌ Error: {e}")
+                print(f" Error: {e}")
         
         print(f"\n" + "=" * 50)
-        print("✅ Demo Complete - Ready for integration!")
+        print(" Demo Complete - Ready for integration!")
         
     except Exception as e:
-        print(f"❌ Could not initialize: {e}")
-        print("💡 Make sure you have OPENROUTER_API_KEY set in your .env file")
+        print(f" Could not initialize: {e}")
+        print(" Make sure you have OPENROUTER_API_KEY set in your .env file")
 
 
 if __name__ == "__main__":

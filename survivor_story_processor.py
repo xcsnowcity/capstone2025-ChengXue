@@ -218,15 +218,15 @@ class SurvivorStoryProcessor:
     
     def process_all_stories(self):
         
-        print("🏃‍♀️ Processing survivor stories for ChromaDB integration...")
+        print(" Processing survivor stories for ChromaDB integration...")
         
         # Get or create collection for survivor stories
         try:
             collection = self.chroma_client.get_collection("domestic_violence_kb")
-            print("✅ Using existing ChromaDB collection")
+            print(" Using existing ChromaDB collection")
         except:
-            print("❌ ChromaDB collection 'domestic_violence_kb' not found")
-            print("💡 Run main.py first to create the knowledge base")
+            print(" ChromaDB collection 'domestic_violence_kb' not found")
+            print(" Run main.py first to create the knowledge base")
             return
         
         processed_count = 0
@@ -235,7 +235,7 @@ class SurvivorStoryProcessor:
         # Process each HTML file
         for html_file in self.stories_path.glob("*.html"):
             try:
-                print(f"\n📖 Processing: {html_file.name}")
+                print(f"\n Processing: {html_file.name}")
                 
                 # Read HTML file
                 with open(html_file, 'r', encoding='utf-8', errors='ignore') as f:
@@ -246,7 +246,7 @@ class SurvivorStoryProcessor:
                 
                 # Skip if content is too short
                 if len(clean_content.strip()) < 200:
-                    print(f"  ⚠️ Skipped (too short after cleaning)")
+                    print(f"   Skipped (too short after cleaning)")
                     continue
                 
                 # Extract metadata
@@ -275,17 +275,17 @@ class SurvivorStoryProcessor:
                 processed_count += 1
                 total_chunks += len(chunks)
                 
-                print(f"  ✅ Added {len(chunks)} chunks")
-                print(f"  📊 Abuse types: {metadata['abuse_types_str']}")
-                print(f"  💪 Hope element: {'Yes' if metadata['has_hope_element'] else 'No'}")
+                print(f"   Added {len(chunks)} chunks")
+                print(f"   Abuse types: {metadata['abuse_types_str']}")
+                print(f"   Hope element: {'Yes' if metadata['has_hope_element'] else 'No'}")
                 
             except Exception as e:
-                print(f"  ❌ Error processing {html_file.name}: {e}")
+                print(f"   Error processing {html_file.name}: {e}")
         
-        print(f"\n🎉 Processing complete!")
-        print(f"📈 Processed {processed_count} survivor stories")
-        print(f"📝 Added {total_chunks} story chunks to knowledge base")
-        print(f"💾 Total documents in collection: {collection.count()}")
+        print(f"\n Processing complete!")
+        print(f" Processed {processed_count} survivor stories")
+        print(f" Added {total_chunks} story chunks to knowledge base")
+        print(f" Total documents in collection: {collection.count()}")
         
         return processed_count, total_chunks
     
@@ -322,7 +322,7 @@ class SurvivorStoryProcessor:
 
 def main():
     
-    print("🇮🇪 Irish Domestic Violence Support - Survivor Story Integration")
+    print(" Irish Domestic Violence Support - Survivor Story Integration")
     print("=" * 70)
     
     # Initialize processor
@@ -333,7 +333,7 @@ def main():
         processed, chunks = processor.process_all_stories()
         
         if processed > 0:
-            print(f"\n🧪 Testing story search...")
+            print(f"\n Testing story search...")
             
             # Test searches
             test_queries = [
@@ -344,7 +344,7 @@ def main():
             ]
             
             for query in test_queries:
-                print(f"\n🔍 Query: '{query}'")
+                print(f"\n Query: '{query}'")
                 stories = processor.search_survivor_stories(query, n_results=2)
                 
                 for story in stories:
@@ -352,17 +352,17 @@ def main():
                     abuse_types = story['metadata'].get('abuse_types_str', 'general')
                     relevance = story['relevance']
                     
-                    print(f"  📖 {survivor_name}'s story (Relevance: {relevance:.2f})")
+                    print(f"   {survivor_name}'s story (Relevance: {relevance:.2f})")
                     print(f"     Types: {abuse_types}")
                     print(f"     Excerpt: {story['content'][:100]}...")
         
-        print(f"\n✨ Survivor story integration complete!")
-        print(f"💡 Stories are now available for contextual RAG responses")
+        print(f"\n Survivor story integration complete!")
+        print(f" Stories are now available for contextual RAG responses")
         
     except Exception as e:
-        print(f"❌ Error: {e}")
-        print("💡 Make sure the 'Knowledge Base/Domestic Abuse Stories' folder exists")
-        print("💡 and that ChromaDB is initialized (run main.py first)")
+        print(f" Error: {e}")
+        print(" Make sure the 'Knowledge Base/Domestic Abuse Stories' folder exists")
+        print(" and that ChromaDB is initialized (run main.py first)")
 
 
 if __name__ == "__main__":

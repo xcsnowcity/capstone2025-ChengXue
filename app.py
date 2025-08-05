@@ -42,7 +42,21 @@ if RAG_TYPE == "full":
         max_context_chunks=int(os.getenv('MAX_CONTEXT_CHUNKS', '5')),
         temperature=float(os.getenv('TEMPERATURE', '0.3'))
     )
-    print(f"✅ Full {llm_provider.upper()} RAG pipeline initialized with {rag_pipeline.model_name}")
+    print(f"Full {llm_provider.upper()} RAG pipeline initialized with {rag_pipeline.model_name}")
+    
+    # Initialize knowledge base if it's empty (first deployment)
+    try:
+        # Check if knowledge base is already populated
+        collections = rag_pipeline.kb_processor.chroma_client.list_collections()
+        if not collections:
+            print("Knowledge base empty, initializing...")
+            rag_pipeline.kb_processor.process_knowledge_base()
+            print("Knowledge base initialized successfully")
+        else:
+            print(f"Knowledge base already contains {len(collections)} collections")
+    except Exception as e:
+        print(f"Error initializing knowledge base: {e}")
+        print("App will run in fallback mode")
     
     # Initialize intelligent conversation manager
     if INTELLIGENT_CONVERSATION:
@@ -52,9 +66,9 @@ if RAG_TYPE == "full":
                 model_name=default_model,
                 temperature=0.3
             )
-            print(f"✅ Intelligent Conversation Manager initialized")
+            print(f"Intelligent Conversation Manager initialized")
         except Exception as e:
-            print(f"⚠️ Could not initialize Intelligent Conversation Manager: {e}")
+            print(f"Could not initialize Intelligent Conversation Manager: {e}")
             INTELLIGENT_CONVERSATION = False
             intelligent_conversation_manager = None
     else:
@@ -63,7 +77,7 @@ else:
     # Fallback to simple template-based
     rag_pipeline = RAG_CLASS()
     intelligent_conversation_manager = None
-    print("⚠️ Using template-based RAG (OpenAI not available)")
+    print("Using template-based RAG (OpenAI not available)")
 
 # Session configuration for safety
 app.config.update(
