@@ -16,6 +16,10 @@ MSc AI-DA-AI Online Thesis Template (LaTeX)_2025.zip
 Timeline-main/
 cited resources/
 meeting audio/
+related papers/
 AnswerConfig.ts
+*.gz
+*.docx
 chroma_db/chroma.sqlite3
 *.sqlite3
+chroma_db/
