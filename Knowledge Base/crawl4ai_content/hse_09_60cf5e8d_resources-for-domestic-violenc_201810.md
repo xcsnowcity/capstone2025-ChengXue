@@ -1,0 +1,63 @@
+# Resources for Domestic Violence - HSE.ie
+
+**Source:** HSE (https://www.hse.ie/eng/about/who/primarycare/socialinclusion/about-social-inclusion/researchreports/resources-for-domestic-violence.html)
+**Relevance Score:** 9/10
+**Keywords:** domestic-violence, socialinclusion, primarycare, violence
+**Extracted:** 2025-08-08T20:18:10.199940
+**Words:** 551
+
+---
+
+Welcome [Logout](javascript:logout\(\))
+[Skip to main content](https://www.hse.ie/eng/about/who/primarycare/socialinclusion/about-social-inclusion/researchreports/resources-for-domestic-violence.html#main)
+  1. [ HSE.ie ](https://www.hse.ie/)
+  2. [National Social Inclusion Office](https://www.hse.ie/eng/about/who/primarycare/socialinclusion/)
+  3. About 
+  4. Research and Reports
+
+
+# Resources for Domestic Violence
+#### Further reading for Domestic Sexual and Gender Based Violence
+  * [National Guidelines on Referral and Forensic Clinical Examination Following Rape and Sexual Assault (Ireland) 4th edition 2018](https://www.hse.ie/eng/services/publications/healthprotection/sexual-assault-response-team-national-guidelines.pdf)
+  * [HSE Policy on Domestic, Sexual and Gender-Based Violence 2010](http://www.rcni.ie/wp-content/uploads/Recent-Rape-and-Sexual-Assault-National-Guidelines-3rd-Edition.pdf)
+  * [Translating Pain Into Action: A Study of Gender-based Violence and Minority Ethnic Women in Ireland](https://www.lenus.ie/handle/10147/298908)
+
+
+For information about the National Social Inclusion Office call: 01 778 5168, or Email: socialinclusion@hse.ie.
+We use strictly necessary cookies to make our site work. We would also like to set optional cookies (analytical, functional and YouTube) to enhance and improve our service. You can opt-out of these cookies. By clicking “Accept All Cookies” you can agree to the use of all cookies. [Cookie Statement](https://www2.hse.ie/cookie-statement/) and [Privacy Statement](https://www2.hse.ie/privacy-statement/)
+Necessary Cookies Only Accept All Cookies
+Manage Cookies
+![HSE Logo](https://cdn.cookielaw.org/logos/89445709-94e1-4e52-b838-78494b4c198f/c1d9d3c4-a935-4029-94c6-875e8022919d/bca34155-3309-4ac7-818e-324a0db0a2c3/HSELogoGreen.png)
+## Protecting your privacy
+This website is owned and operated by the Health Service Executive (HSE). We mainly use cookies to get a better understanding of our users and improve the website. To protect your privacy, cookies that can result in you being identified are turned off. But you can choose to turn them on by changing your cookie preferences below. [Cookie Statement](https://www2.hse.ie/cookie-statement/) [Privacy Statement](https://www2.hse.ie/privacy-statement/)
+Allow All
+###  Manage Consent Preferences
+#### Strictly Necessary Cookies
+Always Active
+Strictly necessary cookies make our website work and keep it secure. They make sure that only humans complete forms, not bots. These cookies are essential for you to browse the website and use its features. For example, page navigation, accessing secure areas of the site and complying with data protection and electronic privacy legislation. We can set these cookies without needing your consent as they are essential. The list below contains the cookies most commonly used on HSE websites. Other strictly necessary cookies may be set on some specific HSE services. Some of the data collected by reCAPTCHA cookies is forwarded to Google. See the [Google Privacy Policy](https://policies.google.com/privacy) and the [Google Terms of Service](https://policies.google.com/terms). 
+Cookies Details‎
+#### Analytical Cookies
+Analytical Cookies
+Analytical cookies collect information about your use of our website. For example which pages you visit. They are essential in measuring what the most frequently visited pages are and making sure that the website works as it should. The data collected by the cookies is all pseudonymised. This means this information cannot be used to identify you. We do not capture information like IP addresses, demographics or your interests. We will get information about what county your device is in, what type of device you are using, how long you stay on website pages and how many website pages you visit.
+Cookies Details‎
+#### Functional Cookies
+Functional Cookies
+Functional cookies remember the choices you've made and provide enhanced, more personal features.
+Cookies Details‎
+#### YouTube Cookies
+YouTube Cookies
+These cookies are used to allow embedded YouTube video to be played on our website. They can also collect anonymous data about your web browser to display targeted advertising to you across the web.
+Cookies Details‎
+Back Button
+### Cookie List
+Search Icon
+Filter Icon
+Clear
+checkbox label label
+Apply Cancel
+ConsentLeg.Interest
+checkbox label label
+checkbox label label
+checkbox label label
+Confirm My Choices
+[![Powered by Onetrust](https://cdn.cookielaw.org/logos/static/powered_by_logo.svg)](https://www.onetrust.com/products/cookie-consent/)
