@@ -9,6 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
+#my_own_api
+*.env
+
 #unrelated files
 Example Theses/
 MSc AI-DA-AI Online Thesis Template (LaTeX)_2025/

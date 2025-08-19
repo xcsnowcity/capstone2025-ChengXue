@@ -16,4 +16,7 @@ dependencies = [
     "flask-cors>=4.0.0",
     "markupsafe>=2.1.0",
     "beautifulsoup4>=4.13.4",
+    "crawl4ai>=0.7.2",
+    "ragas>=0.3.0",
+    "datasets>=4.0.0",
 ]
