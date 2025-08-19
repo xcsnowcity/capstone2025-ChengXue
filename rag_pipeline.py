@@ -13,6 +13,7 @@ except ImportError:
 # Import our knowledge base processor and conversation flow
 from main import KnowledgeBaseProcessor
 from conversation_flow import ConversationManager, UserProfile, ConversationStage
+from llm_crisis_detector import LLMCrisisDetector, CrisisLevel
 from trauma_informed_delivery import TraumaInformedDelivery, NarrativeType, TraumaRisk
 
 # LLM imports
@@ -38,6 +39,7 @@ class DomesticViolenceRAG:
         self.kb_processor = KnowledgeBaseProcessor()
         self.conversation_manager = ConversationManager()
         self.trauma_delivery = TraumaInformedDelivery()
+        self.crisis_detector = LLMCrisisDetector(llm_provider, model_name)
         self.llm_provider = llm_provider
         self.model_name = model_name
         self.max_context_chunks = max_context_chunks
@@ -94,8 +96,23 @@ RESPONSE STRUCTURE:
 Remember: You're providing information, not counseling. Encourage professional support."""
     
     def detect_crisis(self, query: str) -> bool:
-        query_lower = query.lower()
-        return any(keyword in query_lower for keyword in self.crisis_keywords)
+        # Detect if query contains crisis indicators using enhanced LLM detection.
+        crisis_result = self.crisis_detector.detect_crisis_hybrid(query)
+        
+        # Consider high-risk and immediate danger as crisis
+        return crisis_result.crisis_level in [CrisisLevel.IMMEDIATE_DANGER, CrisisLevel.HIGH_RISK]
+    
+    def get_detailed_crisis_info(self, query: str) -> dict:
+        # Get detailed crisis analysis for enhanced responses.
+        crisis_result = self.crisis_detector.detect_crisis_hybrid(query)
+        return {
+            "is_crisis": crisis_result.crisis_level in [CrisisLevel.IMMEDIATE_DANGER, CrisisLevel.HIGH_RISK],
+            "crisis_level": crisis_result.crisis_level.value,
+            "confidence": crisis_result.confidence,
+            "reasoning": crisis_result.reasoning,
+            "immediate_action_needed": crisis_result.immediate_action_needed,
+            "triggered_by": crisis_result.triggered_by
+        }
     
     def get_crisis_response(self) -> str:
         return """🚨 **IMMEDIATE HELP NEEDED**
@@ -108,6 +125,45 @@ You don't have to face this alone. There are people trained to help you right no
 
 **Text "Hi" to 50818** for instant message support
 **Quick exit this conversation** if needed for your safety"""
+    
+    def get_moderate_risk_response(self) -> str:
+        # Response for moderate risk situations - still needs DV-specific support
+        return """I hear the strength it took to reach out, and I want you to know you're not alone in feeling this way.
+
+**First, are you in a safe place right now to talk?**
+
+Many people in difficult relationships feel overwhelmed - these feelings are completely valid. You deserve support and safety.
+
+**Immediate Support Available:**
+- **Women's Aid 24/7 Helpline: 1800 341 900** (free, confidential)
+- **Text "Hi" to 50818** for instant message support
+- **Emergency: 999 or 112** if you feel unsafe
+
+**I can help you with:**
+- Understanding your rights and options in Ireland
+- Safety planning information
+- Local support services in your area
+- Information about court orders and legal processes
+
+What would be most helpful for you right now? Remember, you can exit this conversation quickly using the button above if needed for your safety."""
+    
+    def get_low_risk_response_with_safety_check(self) -> str:
+        # Response for low-risk situations but still with safety awareness
+        return """Thank you for reaching out. **Are you in a safe place right now?**
+
+I'm here to provide information about domestic violence support and resources in Ireland.
+
+**Support Always Available:**
+- **Women's Aid 24/7 Helpline: 1800 341 900** (free, confidential)
+- **Emergency: 999 or 112** if needed
+
+**I can help you with:**
+- Understanding domestic violence and your rights
+- Information about support services in your area
+- Legal options and court processes
+- Safety planning information
+
+What information would be most helpful to you?"""
     
     def retrieve_context(self, query: str, filter_by: Optional[Dict] = None) -> List[Dict[str, Any]]:
         
@@ -605,13 +661,37 @@ INSTRUCTIONS: Provide a personalized, empathetic response using the context. Ref
                      filter_by: Optional[Dict] = None,
                      include_sources: bool = True) -> Dict[str, Any]:
         
-        # Check for crisis indicators first
-        if self.detect_crisis(query):
+        # Check for crisis indicators first with detailed analysis
+        crisis_info = self.get_detailed_crisis_info(query)
+        
+        if crisis_info["is_crisis"]:
+            # High-risk/immediate danger - emergency response
             return {
                 "response": self.get_crisis_response(),
                 "is_crisis": True,
                 "sources": [],
-                "metadata": {"crisis_detected": True}
+                "metadata": {
+                    "crisis_detected": True,
+                    "crisis_level": crisis_info["crisis_level"],
+                    "confidence": crisis_info["confidence"],
+                    "reasoning": crisis_info["reasoning"],
+                    "triggered_by": crisis_info["triggered_by"]
+                }
+            }
+        
+        elif crisis_info["crisis_level"] == "moderate_risk" and crisis_info.get("immediate_action_needed", False):
+            # Only return generic response for true moderate risk with immediate action needed
+            return {
+                "response": self.get_moderate_risk_response(),
+                "is_crisis": False,
+                "sources": [],
+                "metadata": {
+                    "moderate_risk_detected": True,
+                    "crisis_level": crisis_info["crisis_level"],
+                    "confidence": crisis_info["confidence"],
+                    "reasoning": crisis_info["reasoning"],
+                    "triggered_by": crisis_info["triggered_by"]
+                }
             }
         
         # Retrieve relevant context
@@ -705,7 +785,7 @@ def demo_rag_pipeline():
                           f"(Relevance: {source['relevance']:.2f})")
             
         except Exception as e:
-            print(f"❌ Error processing query: {e}")
+            print(f"Error processing query: {e}")
     
     print(f"\n" + "=" * 60)
     print(" RAG Pipeline Demo Complete")

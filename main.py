@@ -16,8 +16,8 @@ class KnowledgeBaseProcessor:
         self.tokenizer = tiktoken.get_encoding("cl100k_base")
         
     def clean_markdown_content(self, content: str) -> str:
-        """Clean markdown content by removing navigation, cookies, and web artifacts."""
-        
+        # Clean markdown content by removing navigation, cookies, and web artifacts.
+
         # Remove cookie consent sections
         content = re.sub(r'Google Webfont Settings:.*?Notifications', '', content, flags=re.DOTALL)
         content = re.sub(r'We also use different external services.*?Hide notification only.*?\n', '', content, flags=re.DOTALL)
@@ -56,8 +56,8 @@ class KnowledgeBaseProcessor:
         return content
     
     def chunk_content(self, content: str, max_tokens: int = 500, overlap: int = 50) -> List[str]:
-        """Chunk content into smaller pieces with overlap."""
-        
+        # Chunk content into smaller pieces with overlap.
+
         # Split by paragraphs first
         paragraphs = content.split('\n\n')
         chunks = []
@@ -105,8 +105,8 @@ class KnowledgeBaseProcessor:
         return chunks
     
     def extract_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract metadata from file path and content."""
-        
+        # Extract metadata from file path and content.
+
         parts = file_path.parts
         metadata = {
             "file_path": str(file_path),
@@ -152,27 +152,38 @@ class KnowledgeBaseProcessor:
         
         return metadata
     
-    def process_knowledge_base(self):
-        """Process all markdown files in the knowledge base."""
-        
+    def process_knowledge_base(self, force_reprocess=False):
+        # Process all markdown files in the knowledge base.
+
         print("Processing knowledge base...")
         
         # Create or get collection
         try:
             collection = self.chroma_client.get_collection("domestic_violence_kb")
             print("Using existing collection")
+            # Get list of already processed files
+            existing_ids = set(collection.get()['ids']) if not force_reprocess else set()
         except:
             collection = self.chroma_client.create_collection(
                 name="domestic_violence_kb",
                 metadata={"description": "Irish domestic violence knowledge base"}
             )
             print("Created new collection")
+            existing_ids = set()
         
         processed_count = 0
+        skipped_count = 0
         
         # Process all markdown files
         for md_file in self.knowledge_base_path.rglob("*.md"):
             try:
+                # Check if file already processed
+                file_base_id = f"{md_file.stem}_0"
+                if file_base_id in existing_ids:
+                    print(f"Skipping (already processed): {md_file.name}")
+                    skipped_count += 1
+                    continue
+                
                 print(f"Processing: {md_file.name}")
                 
                 # Read file
@@ -218,12 +229,24 @@ class KnowledgeBaseProcessor:
             except Exception as e:
                 print(f"  Error processing {md_file.name}: {e}")
         
-        print(f"\nProcessed {processed_count} files")
+        print(f"\nProcessed {processed_count} new files, skipped {skipped_count} existing files")
         print(f"Collection now has {collection.count()} documents")
     
-    def search_knowledge_base(self, query: str, n_results: int = 5) -> List[Dict[str, Any]]:
-        """Search the knowledge base for relevant content."""
+    def reset_knowledge_base(self):
+        # Delete and recreate the knowledge base from scratch.
+        print("Resetting knowledge base...")
+        try:
+            self.chroma_client.delete_collection("domestic_violence_kb")
+            print("Deleted existing collection")
+        except:
+            print("No existing collection to delete")
         
+        # Reprocess everything
+        self.process_knowledge_base(force_reprocess=True)
+    
+    def search_knowledge_base(self, query: str, n_results: int = 5) -> List[Dict[str, Any]]:
+        # Search the knowledge base for relevant content.
+
         collection = self.chroma_client.get_collection("domestic_violence_kb")
         
         # Create query embedding
@@ -248,8 +271,8 @@ class KnowledgeBaseProcessor:
         return formatted_results
 
 def main():
-    """Main function to process knowledge base or run searches."""
-    
+    # Main function to process knowledge base or run searches.
+
     processor = KnowledgeBaseProcessor()
     
     # Check if we should process the knowledge base
